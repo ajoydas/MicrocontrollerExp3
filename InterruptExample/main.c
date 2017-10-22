@@ -26,6 +26,7 @@
 //
 //}
 
+/*
 int main(void)
 {
 	DDRA = 0xff;
@@ -59,3 +60,42 @@ int main(void)
 	}
 }
 
+*/
+
+volatile char c;
+
+ISR(INT0_vect)
+{
+	c++;
+	if(c>15) c=0;
+	c = c & 0x0f;
+	PORTA = c;
+	_delay_ms(500);
+	GIFR = 0xFF;
+}
+
+ISR(INT1_vect)
+{
+	c--;
+	if(c<0) c=15;
+	c = c & 0x0f;
+	PORTA = c;
+	_delay_ms(500);
+	GIFR = 0xFF;
+}
+
+int main(void)
+{
+	c = 0x0f;
+	DDRA = 0xff;
+	PORTA = c;
+	GICR = (1 << INT0) | (1 << INT1);
+	MCUCR = MCUCR | 0x0a;
+	sei();
+	
+	while(1)
+	{
+		//TODO:: Please write your application code
+		
+	}
+}
