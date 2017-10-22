@@ -29,8 +29,8 @@
 int main(void)
 {
 	DDRA = 0xff;
-	PORTA = 0x04;
-	DDRB = 0xfe;
+	PORTA = 0x00;
+	DDRB = 0xfc;
 	while(1)
 	{
 		//if(PORTC != 0x01){
@@ -46,7 +46,14 @@ int main(void)
 			}
 			else PORTA += 1;
 		}
-		_delay_ms(1000);
+		if(PINB & (1<<PB1))
+		{
+			if(PORTA == 0x00){
+				PORTA = 0x0f;
+			}
+			else PORTA -= 1;
+		}
+		_delay_ms(2000);
 
 
 	}
