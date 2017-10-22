@@ -28,8 +28,8 @@
 
 int main(void)
 {
-	DDRC = 0x01;
-	PORTC = 0x00;
+	DDRA = 0xff;
+	PORTA = 0x04;
 	DDRB = 0xfe;
 	while(1)
 	{
@@ -41,12 +41,12 @@ int main(void)
 
 		if(PINB & (1<<PB0))
 		{
-			if(PORTC != 0x01){
-				PORTC = 0x01;
+			if(PORTA == 0x0f){
+				PORTA = 0x00;
 			}
-			else PORTC = 0x00;
+			else PORTA += 1;
 		}
-		_delay_ms(2000);
+		_delay_ms(1000);
 
 
 	}
